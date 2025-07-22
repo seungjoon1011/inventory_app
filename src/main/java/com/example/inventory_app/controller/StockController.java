@@ -1,6 +1,7 @@
 package com.example.inventory_app.controller;
 
 import com.example.inventory_app.dto.StockDto;
+import com.example.inventory_app.dto.StockResponseDto;
 import com.example.inventory_app.dto.StockUpdateDto;
 import com.example.inventory_app.model.Stock;
 import com.example.inventory_app.query.StockSearchCondition;
@@ -22,8 +23,8 @@ public class StockController {
         return stockService.create(dto);
     }
     @GetMapping
-    public List<Stock> search(StockSearchCondition condition) {
-        return stockService.search(condition);
+    public List<StockResponseDto> search(StockSearchCondition cond) {
+        return stockService.search(cond);
     }
     @GetMapping("/{id}")
     public Stock getById(@PathVariable Long id) {

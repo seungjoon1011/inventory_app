@@ -1,6 +1,7 @@
 package com.example.inventory_app.service;
 
 import com.example.inventory_app.dto.StockDto;
+import com.example.inventory_app.dto.StockResponseDto;
 import com.example.inventory_app.dto.StockUpdateDto;
 import com.example.inventory_app.model.Product;
 import com.example.inventory_app.model.Stock;
@@ -26,10 +27,12 @@ public class StockService {
     private final ProductRepository productRepository;
     private final WarehouseRepository warehouseRepository;
 
-    public List<Stock> search(StockSearchCondition condition) {
-        return queryRepository.search(condition);
-    }
+    public List<StockResponseDto> search(StockSearchCondition cond) {
+        List<Stock> stocks = queryRepository.search(cond);
 
+        return  stocks.stream()
+                .map(StockResponseDto::fromEntity).toList();
+    }
     public Stock getById(Long id) {
         return stockRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("재고를 찾을 수 없습니다."));
